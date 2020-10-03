@@ -1,0 +1,13 @@
+**/.idea
+**/*.iml
+**/*.bak
+**/*.log
+**/*.orig
+**/*.versionsBackup
+**/target
+*.cer
+*.p12
+**/logs
+**/pid
+**/.gradle
+
