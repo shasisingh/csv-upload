@@ -1,0 +1,11 @@
+iban,currencyCode,bicCode,bundleCode,customerId,processingDate
+iban1,"currencyCode",bicCode,bundleCode,customerId,2017/01/02
+iban1,,"currencyCode",bicCode,bundleCode,customerId,2017/01/02
+"iban2",currencyCode,bicCode,bundleCode,customerId,2017/01/01
+iban3,currencyCode,bicCode,"bundleCode","customerId",2017/01/01
+iban4,currencyCode,bicCode,bundleCode,customerId,2017/01/01
+iban5,"currencyCode",bicCode,bundleCode,"cust,omerId",2017/01/01
+iban6,"currencyCode","B""Ic",bundleCode,"cust,omerId",2017/01/01
+iban6,"currencyCode","B""Ic",bundleCode,"cust,omerId",2017/01/01
+iban6,"currencyCode","B""Ic",bundleCode,"cust,omerId",2017/01/01
+iban9,"currencyCode","B""Ic",bundleCode,"cust,omerId",XX/01/01
