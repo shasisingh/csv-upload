@@ -1,7 +1,11 @@
 package com.example.shashi.playcsv.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 
+@SuppressWarnings("pmd:ImplementEqualsHashCodeOnValueObjects")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BulkUpload {
 
     private String iban;
@@ -10,6 +14,7 @@ public class BulkUpload {
     private String bundleCode;
     private String customerId;
     private Date processingDate;
+    private ValidationError validationError;
 
     public Date getProcessingDate() {
         return processingDate;
@@ -59,9 +64,18 @@ public class BulkUpload {
         this.customerId = customerId;
     }
 
+    public ValidationError getValidationError() {
+        return validationError;
+    }
+
+    public void setValidationError(ValidationError validationError) {
+        this.validationError = validationError;
+    }
+
     @Override
     public String toString() {
         return "BulkUpload{" + "iban='" + iban + '\'' + ", currencyCode='" + currencyCode + '\'' + ", bicCode='" + bicCode + '\'' + ", bundleCode='"
-                + bundleCode + '\'' + ", customerId='" + customerId + '\'' + ", processingDate=" + processingDate + '}';
+                + bundleCode + '\'' + ", customerId='" + customerId + '\'' + ", processingDate=" + processingDate + ", validationError="
+                + validationError + '}';
     }
 }
