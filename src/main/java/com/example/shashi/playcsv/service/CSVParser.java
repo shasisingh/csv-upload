@@ -4,6 +4,7 @@ import com.example.shashi.playcsv.model.BulkUpload;
 import com.example.shashi.playcsv.model.CsvFile;
 import com.example.shashi.playcsv.model.ValidationError;
 import com.example.shashi.playcsv.model.ValidationStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvConstraintViolationException;
@@ -13,7 +14,6 @@ import org.supercsv.prefs.CsvPreference;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -24,18 +24,21 @@ import static com.example.shashi.playcsv.validator.Rule.getProcessors;
 @Service
 public class CSVParser {
 
+    @Value("${csv.bulk.upload.column.name}")
+    private String[] nameMapping;
+
     public List<BulkUpload> readCSVToBean(Reader reader, CsvPreference csvPreference) {
         List<BulkUpload> bulkUploads = new ArrayList<>();
         try (CsvBeanReader beanReader = new CsvBeanReader(reader, csvPreference)) {
-            final String[] nameMapping = new String[] { "iban", "currencyCode", "bicCode", "bundleCode", "customerId", "processingDate" };
             beanReader.getHeader(true);
             final CellProcessor[] processors = getProcessors();
-            BulkUpload bulkUpload = new BulkUpload();
+            new BulkUpload();
+            BulkUpload bulkUpload;
             while ((bulkUpload = getRead(beanReader, nameMapping, processors)) != null) {
                 bulkUploads.add(bulkUpload);
             }
         } catch (IOException e) {
-            System.out.println("Error" + e.getMessage());
+            System.err.println("Error" + e.getMessage());
         }
         return bulkUploads;
     }
@@ -46,23 +49,23 @@ public class CSVParser {
             res = beanReader.read(BulkUpload.class, nameMapping, processors);
             if (res != null) {
                 ValidationError validationError = validateBean(res, beanReader.getLineNumber(), beanReader.getRowNumber());
-                if(validationError==null) {
+                if (validationError == null) {
                     res.setValidationStatus(ValidationStatus.SUCCESS);
                     res.setValidationError(null);
-                }else {
+                } else {
                     res.setValidationError(validationError);
                     res.setValidationStatus(ValidationStatus.FAILED);
                 }
-                System.out.printf("lineNo=%s, rowNo=%s, response=%s%n", beanReader.getLineNumber(), beanReader.getRowNumber(), res);
+                System.out.println(String.format("lineNo=%s, rowNo=%s, response=%s%n", beanReader.getLineNumber(), beanReader.getRowNumber(), res));
             }
         } catch (SuperCsvConstraintViolationException e) {
             res.setValidationError(validationError(e.getMessage(), beanReader.getLineNumber(), beanReader.getRowNumber()));
             res.setValidationStatus(ValidationStatus.FAILED);
-            System.out.printf("lineNo=%s, rowNo=%s, error=%s", beanReader.getLineNumber(), beanReader.getRowNumber(), e.getMessage());
+            System.out.println(String.format("lineNo=%s, rowNo=%s, error=%s", beanReader.getLineNumber(), beanReader.getRowNumber(), e.getMessage()));
         } catch (RuntimeException e) {
             res.setValidationStatus(ValidationStatus.FAILED);
             res.setValidationError(validationError(e.getMessage(), beanReader.getLineNumber(), beanReader.getRowNumber()));
-            System.out.printf("lineNo=%s, rowNo=%s,error=%s", beanReader.getLineNumber(), beanReader.getRowNumber(), e.getMessage());
+            System.out.println(String.format("lineNo=%s, rowNo=%s,error=%s", beanReader.getLineNumber(), beanReader.getRowNumber(), e.getMessage()));
         }
         return res;
     }
@@ -93,9 +96,9 @@ public class CSVParser {
         if (!validateCustomerId(bulkUpload.getCustomerId())) {
             listOfError.add("invalid customerId code.");
         }
-        if(listOfError.isEmpty()){
-           return null;
-        }else {
+        if (listOfError.isEmpty()) {
+            return null;
+        } else {
             validationError.setErrorDesc(listOfError);
             CsvFile csvFile = new CsvFile();
             csvFile.setRowNo(rowNumber);
