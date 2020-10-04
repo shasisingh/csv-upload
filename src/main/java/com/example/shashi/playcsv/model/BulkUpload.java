@@ -15,6 +15,7 @@ public class BulkUpload {
     private String customerId;
     private Date processingDate;
     private ValidationError validationError;
+    private ValidationStatus validationStatus;
 
     public Date getProcessingDate() {
         return processingDate;
@@ -72,10 +73,18 @@ public class BulkUpload {
         this.validationError = validationError;
     }
 
+    public ValidationStatus getValidationStatus() {
+        return validationStatus;
+    }
+
+    public void setValidationStatus(ValidationStatus validationStatus) {
+        this.validationStatus = validationStatus;
+    }
+
     @Override
     public String toString() {
         return "BulkUpload{" + "iban='" + iban + '\'' + ", currencyCode='" + currencyCode + '\'' + ", bicCode='" + bicCode + '\'' + ", bundleCode='"
                 + bundleCode + '\'' + ", customerId='" + customerId + '\'' + ", processingDate=" + processingDate + ", validationError="
-                + validationError + '}';
+                + validationError + ", validationStatus=" + validationStatus + '}';
     }
 }

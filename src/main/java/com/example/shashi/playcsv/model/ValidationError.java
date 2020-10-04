@@ -2,11 +2,13 @@ package com.example.shashi.playcsv.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.List;
+
 @SuppressWarnings("pmd:ImplementEqualsHashCodeOnValueObjects")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ValidationError {
     private CsvFile key;
-    private String errorDesc;
+    private List<String> errorDesc;
 
     public CsvFile getKey() {
         return key;
@@ -16,16 +18,16 @@ public class ValidationError {
         this.key = key;
     }
 
-    public String getErrorDesc() {
+    public List<String> getErrorDesc() {
         return errorDesc;
     }
 
-    public void setErrorDesc(String errorDesc) {
+    public void setErrorDesc(List<String> errorDesc) {
         this.errorDesc = errorDesc;
     }
 
     @Override
     public String toString() {
-        return "ValidationError{" + "key=" + key + ", errorDesc='" + errorDesc + '\'' + '}';
+        return "ValidationError{" + "key=" + key + ", errorDesc=" + errorDesc + '}';
     }
 }

@@ -15,7 +15,7 @@ public class Rule {
                 new Optional(), // BIC
                 new Optional(), // bundleId
                 new NotNull(), // customerId
-                new ParseDate("yyy/MM/dd") };
+                new ParseDate("mm/dd/yyyy") };
         return processors;
     }
 }
