@@ -85,16 +85,16 @@ public class CSVParser {
         ValidationError validationError = new ValidationError();
         List<String> listOfError = new ArrayList<>();
         if (!validateIBAN(bulkUpload.getIban())) {
-            listOfError.add("invalid Iban format.");
+            listOfError.add("Invalid Iban format.");
         }
         if (!validateBic(bulkUpload.getBicCode())) {
-            listOfError.add("invalid BIC code ( min=8,max=11).");
+            listOfError.add("Invalid BIC code ( min=8,max=11).");
         }
         if (!validateCurrencyCode(bulkUpload.getCurrencyCode())) {
-            listOfError.add("invalid Currency code ( min=3,max=3).");
+            listOfError.add("Invalid Currency code ( min=3,max=3).");
         }
         if (!validateCustomerId(bulkUpload.getCustomerId())) {
-            listOfError.add("invalid customerId code.");
+            listOfError.add("Invalid customerId code.");
         }
         if (listOfError.isEmpty()) {
             return null;
@@ -129,12 +129,6 @@ public class CSVParser {
     private boolean validateCustomerId(final String customerId) {
         Pattern pattern = Pattern.compile("[0-9]{1,15}");
         Matcher matcher = pattern.matcher(customerId);
-        return matcher.matches();
-    }
-
-    private boolean validateData(final String var1) {
-        Pattern pattern = Pattern.compile("[A-Za-z]");
-        Matcher matcher = pattern.matcher(var1);
         return matcher.matches();
     }
 
