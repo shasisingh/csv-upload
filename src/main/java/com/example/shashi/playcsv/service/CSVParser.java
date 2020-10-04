@@ -56,7 +56,7 @@ public class CSVParser {
                     res.setValidationError(validationError);
                     res.setValidationStatus(ValidationStatus.FAILED);
                 }
-                System.out.println(String.format("lineNo=%s, rowNo=%s, response=%s%n", beanReader.getLineNumber(), beanReader.getRowNumber(), res));
+                System.out.print(String.format("lineNo=%s, rowNo=%s, response=%s%n", beanReader.getLineNumber(), beanReader.getRowNumber(), res));
             }
         } catch (SuperCsvConstraintViolationException e) {
             res.setValidationError(validationError(e.getMessage(), beanReader.getLineNumber(), beanReader.getRowNumber()));
